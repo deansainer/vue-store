@@ -1,5 +1,4 @@
 <script setup>
-import CartItem from './CartItem.vue';
 import CartItemList from './CartItemList.vue';
 </script>
 

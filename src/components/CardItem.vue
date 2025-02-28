@@ -13,9 +13,9 @@
 
 <template>
     <div>
-      <div class="bg-white mt-6 h-86 p-6 w-76 border border-slate-200 relative rounded-xl shadow-lg cursor-pointer transition hover:-translate-y-2 hover:shadow-xl">
+      <div class="bg-white mt-6 h-92 p-6 w-76 border border-slate-200 relative rounded-xl shadow-lg cursor-pointer transition hover:-translate-y-2 hover:shadow-xl">
         <img @click="onClickFavorite" class="absolute" :src="isFavorite ? '/like-2.svg' : '/like-1.svg'" alt="like2">
-        <img :src="imageUrl" class="w-54 mx-auto" alt="sneaker">
+        <img :src="imageUrl" class="w-46 mx-auto" alt="sneaker">
         <p class="text-xl px-2 mt-4">{{ title }}</p>
 
         <div class="flex justify-between px-2 mt-4">
