@@ -2,7 +2,7 @@
 import CardList from './components/CardList.vue';
 import Header from './components/Header.vue';
 import axios from 'axios'
-import { onMounted, ref, watch, reactive } from 'vue';
+import { onMounted, ref, watch, reactive, provide} from 'vue';
 
 // states
 const items = ref([])
@@ -73,6 +73,11 @@ function onChangeSearchQuery(event){
   filters.searchQuery = event.target.value
 }
 
+
+function addToFavorites(item){
+  item.isFavorite = !item.isFavorite
+}
+
 </script>
 
 <template>
@@ -101,7 +106,7 @@ function onChangeSearchQuery(event){
     </div>
     </div>
 
-      <CardList :items="items"/>
+      <CardList :items="items" @addToFavorites="addToFavorites"/>
     
   </div>
 </template>
