@@ -4,7 +4,9 @@ import Header from './components/Header.vue';
 import axios from 'axios'
 import { onMounted, ref, watch, reactive } from 'vue';
 
+// states
 const items = ref([])
+const favorites = ref([])
 
 // applying filters for fetching items
 const filters = reactive({
@@ -12,6 +14,7 @@ const filters = reactive({
   searchQuery: ''
 })
 
+// fetching items
 async function fetchItems() {
   try {
     const { data } = await axios.get('https://f5f2b5caba228578.mokky.dev/items', {
@@ -21,14 +24,45 @@ async function fetchItems() {
       }
     });
 
-    items.value = data;
+    items.value = data.map((obj) => ({
+      ...obj,
+      isFavorite: false,
+      isAdded: false
+    }))
+
   } catch (error) {
     console.log(error);
   }
 }
 
-onMounted(fetchItems) 
+// fetching favorites
+async function fetchFavorites() {
+  try {
+    const { data } = await axios.get('https://f5f2b5caba228578.mokky.dev/favorites');
+    favorites.value = data;
 
+    // iterate over all items in items.value and check if they exist in favorites.value
+    items.value = items.value.map((item) => {
+      const favorite = favorites.value.find(fav => fav.parentId === item.id);    //find the item in the favorites list using its parentId
+      
+      // If the item is found in favorites, mark it as "isFavorite"
+      return favorite
+        ? { ...item, isFavorite: true, favoriteId: favorite.id }
+        : item;
+    });
+    console.log(items.value)
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// rendering once page is opened
+onMounted(async () => {
+  await fetchItems();
+  await fetchFavorites();
+});
+
+// listening to changes in filters & executing fetchItems func when changed
 watch(filters, fetchItems)
  
 function onChangeSelect(event){
@@ -38,7 +72,6 @@ function onChangeSelect(event){
 function onChangeSearchQuery(event){
   filters.searchQuery = event.target.value
 }
-
 
 </script>
 
