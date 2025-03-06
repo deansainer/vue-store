@@ -1,3 +1,9 @@
+<script setup>
+import { inject } from 'vue';
+const {openDrawer, closeDrawer} = inject('cart')
+
+</script>
+
 <template>
     <header class="flex justify-between border-b p-4 border-gray-300">
       <div class="flex items-center">
@@ -10,7 +16,7 @@
 
 
     <ul class="flex items-center">
-      <li class="ml-8 flex items-center text-slate-500 cursor-pointer hover:text-black">
+      <li @click="openDrawer" class="ml-8 flex items-center text-slate-500 cursor-pointer hover:text-black">
         <img src="/cart.svg">
         <span class="text-sm ml-2">38.99 USD</span>
       </li>

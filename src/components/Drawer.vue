@@ -1,14 +1,20 @@
 <script setup>
+import { inject } from 'vue';
 import CartItemList from './CartItemList.vue';
+const {openDrawer, closeDrawer} = inject('cart')
+
+defineProps({
+    
+})
 </script>
 
 
 <template>
     <div>
-        <div class="bg-black fixed top-0 left-0 h-full w-full opacity-70 z-10"></div>
+        <div  @click="closeDrawer"  class="bg-black fixed top-0 left-0 h-full w-full opacity-70 z-10"></div>
         <div class="bg-white flex h-full fixed top-0 right-0 w-96 h-full z-20 p-5 flex-col">
-            <div class="flex items-center gap-5 h10">
-                <img class="w-8 h-8 cursor-pointer mt-1 opacity-40 hover:opacity-90 transition" src="/arrow-back.svg">
+            <div  class="flex items-center gap-5 h10">
+                <img @click="closeDrawer" class="w-8 h-8 cursor-pointer mt-1 opacity-40 hover:opacity-90 transition" src="/arrow-back.svg">
                 <span class="text-2xl">Cart</span>
             </div>
             

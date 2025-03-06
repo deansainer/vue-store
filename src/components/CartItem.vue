@@ -1,14 +1,20 @@
 <script setup>
+
     defineProps({
+        id: Number,
+        imageUrl: String,
         title: String,
-        price: Number
+        price: Number,
+        isFavorite: Boolean,
+        isAdded: Boolean,
+        removeFromCart: Function
     })
 
 </script>
 
 <template>
     <div class="border border-slate-200 p-2 rounded-xl flex relative gap-5 mt-4">
-        <img class="w-22 h-22" src="/sneakers/sneakers-1.jpg">
+        <img class="w-22 h-22" :src="imageUrl">
         
         <div class="flex flex-col my-auto">
             <p class="text-sm">{{title}}</p>

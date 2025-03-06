@@ -3,16 +3,35 @@ import CardList from './components/CardList.vue';
 import Header from './components/Header.vue';
 import axios from 'axios'
 import { onMounted, ref, watch, reactive, provide} from 'vue';
+import Drawer from './components/Drawer.vue';
 
 // states
 const items = ref([])
 const favorites = ref([])
+const isDrawerOpen = ref(false)
+const cartItems = ref([])
+
 
 // applying filters for fetching items
 const filters = reactive({
   sortBy: 'title',
   searchQuery: ''
 })
+
+function openDrawer(){
+  isDrawerOpen.value = true;
+}
+
+function closeDrawer(){
+  isDrawerOpen.value = false;
+}
+
+provide('cart', {
+  cartItems,
+  openDrawer,
+  closeDrawer
+})
+
 
 // fetching items
 async function fetchItems() {
@@ -47,14 +66,14 @@ async function fetchFavorites() {
       
       // If the item is found in favorites, mark it as "isFavorite"
       return favorite
-        ? { ...item, isFavorite: true, favoriteId: favorite.id }
+        ? { ...item, isFavorite: true, favoriteId: favorite.id, isAdded: false }
         : item;
     });
-    console.log(items.value)
   } catch (error) {
     console.log(error);
   }
 }
+
 
 // rendering once page is opened
 onMounted(async () => {
@@ -74,15 +93,48 @@ function onChangeSearchQuery(event){
 }
 
 
-function addToFavorites(item){
-  item.isFavorite = !item.isFavorite
+
+async function addToFavorites(item){
+  // item.isFavorite = !item.isFavorite
+  try {
+    if(!item.isFavorite){
+      const obj = {
+      parentId: item.id
+    }
+    item.isFavorite = true;
+
+      const {data} = await axios.post('https://f5f2b5caba228578.mokky.dev/favorites', obj)
+      item.favoriteId = data.id
+    } else{
+      item.isFavorite = false;
+      await axios.delete(`https://f5f2b5caba228578.mokky.dev/favorites/${item.favoriteId}`)
+      item.favoriteId = null
+    }
+
+  } catch (error) {
+    console.log(error)
+  }
 }
+
+function addToCart(item){
+  if(!item.isAdded){
+    cartItems.value.push(item)
+    item.isAdded = true
+  } else{
+    cartItems.value.splice(cartItems.value.indexOf(item), 1)
+    item.isAdded = false
+  }
+  console.log('cart item: ', item)
+  console.log('cart list: ', cartItems)
+}
+
+
 
 </script>
 
 <template>
   <div class="text-2xl w-4/5 m-auto bg-white min-h-screen p-4 rounded-xl mt-20 shadow-xl">
-    <!-- <Drawer/> -->
+    <Drawer v-if="isDrawerOpen"/>
     <Header/>
 
     <div class="mt-6 ml-7 mr-14 flex justify-between">
@@ -106,7 +158,7 @@ function addToFavorites(item){
     </div>
     </div>
 
-      <CardList :items="items" @addToFavorites="addToFavorites"/>
+      <CardList @addToCart="addToCart" :items="items" @addToFavorites="addToFavorites"/>
     
   </div>
 </template>

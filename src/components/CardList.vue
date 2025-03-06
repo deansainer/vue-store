@@ -1,13 +1,11 @@
 <script setup>
 import CardItem from './CardItem.vue'
 
-
 defineProps({
   items: Array,
-  addToFavorites: Function
 })
 
-const emit = defineEmits(['addToFavorites'])
+const emit = defineEmits(['addToFavorites', 'addToCart', 'items'])
 
 </script>
 
@@ -17,12 +15,13 @@ const emit = defineEmits(['addToFavorites'])
       v-for="item in items"
       :key="item.id"
       :id="item.id"
-      :isAdded="false"
+      :isAdded="item.isAdded"
       :isFavorite="item.isFavorite"
       :title="item.title"
       :price="item.price"
       :imageUrl="item.imageUrl"
       :addToFavorites="() => emit('addToFavorites', item)"
+      :addToCart="() => emit('addToCart', item)"
     />
   </div>
 </template>
