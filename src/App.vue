@@ -2,7 +2,7 @@
 import CardList from './components/CardList.vue';
 import Header from './components/Header.vue';
 import axios from 'axios'
-import { onMounted, ref, watch, reactive, provide} from 'vue';
+import { onMounted, ref, watch, watchEffect, reactive, provide} from 'vue';
 import Drawer from './components/Drawer.vue';
 
 // states
@@ -10,6 +10,14 @@ const items = ref([])
 const favorites = ref([])
 const isDrawerOpen = ref(false)
 const cartItems = ref([])
+
+const cartTotal = ref(0)
+
+function getCartTotal(){
+  const total = cartItems.value.reduce((total, item) => total += item.price, 0)
+  console.log(total)
+  return total
+}
 
 
 // applying filters for fetching items
@@ -85,7 +93,11 @@ onMounted(async () => {
 
 // listening to changes in filters & executing fetchItems func when changed
 watch(filters, fetchItems)
- 
+
+watchEffect(() => {
+  cartTotal.value = getCartTotal();
+});
+
 function onChangeSelect(event){
   filters.sortBy = event.target.value
 }
@@ -145,7 +157,7 @@ function removeFromCart(item){
 <template>
   <div class="text-2xl w-4/5 m-auto bg-white min-h-screen p-4 rounded-xl mt-20 shadow-xl">
     <Drawer v-if="isDrawerOpen"/>
-    <Header/>
+    <Header :cartTotal="getCartTotal()"/>
 
     <div class="mt-6 ml-7 mr-14 flex justify-between">
       <h2 class="">All sneakers</h2>

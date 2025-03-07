@@ -7,7 +7,6 @@
         price: Number,
         isFavorite: Boolean,
         isAdded: Boolean,
-        removeFromCart: Function
     })
 
 </script>

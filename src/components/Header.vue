@@ -2,6 +2,9 @@
 import { inject } from 'vue';
 const {openDrawer, closeDrawer} = inject('cart')
 
+defineProps({
+  cartTotal: Number
+})
 </script>
 
 <template>
@@ -18,7 +21,7 @@ const {openDrawer, closeDrawer} = inject('cart')
     <ul class="flex items-center">
       <li @click="openDrawer" class="ml-8 flex items-center text-slate-500 cursor-pointer hover:text-black">
         <img src="/cart.svg">
-        <span class="text-sm ml-2">38.99 USD</span>
+        <span class="text-sm ml-2">${{cartTotal}}</span>
       </li>
 
       <li class="ml-4 flex items-center text-slate-500 cursor-pointer hover:text-black">
