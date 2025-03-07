@@ -5,6 +5,7 @@ const {openDrawer, closeDrawer} = inject('cart')
 defineProps({
   cartTotal: Number
 })
+
 </script>
 
 <template>
