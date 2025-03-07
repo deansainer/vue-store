@@ -15,7 +15,7 @@ const {cartItems, removeFromCart} = inject('cart')
         :isFavorite="item.isFavorite"
         :isAdded="item.isAdded"
         :imageUrl="item.imageUrl"
-        @removeFromCart="removeFromCart(item)"
+        @removeFromCart="() => removeFromCart(item)"
         />
     </div>
   </template>

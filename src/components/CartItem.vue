@@ -1,5 +1,5 @@
 <script setup>
-
+    const emit = defineEmits(['removeFromCart'])
     defineProps({
         id: Number,
         imageUrl: String,
@@ -20,7 +20,7 @@
             <p class="text-sm">{{title}}</p>
             <p class="text-sm bold">Price: ${{ price }}</p>
 
-            <img class="w-8 h-8 absolute right-0 top-0 m-3 opacity-60 transition hover:opacity-200 cursor-pointer" src="/close.svg">
+            <img @click="emit('removeFromCart')" class="w-8 h-8 absolute right-0 top-0 m-3 opacity-60 transition hover:opacity-200 cursor-pointer" src="/close.svg">
 
         </div>
     </div>

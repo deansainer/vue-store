@@ -29,7 +29,9 @@ function closeDrawer(){
 provide('cart', {
   cartItems,
   openDrawer,
-  closeDrawer
+  closeDrawer,
+  addToCart,
+  removeFromCart
 })
 
 
@@ -116,18 +118,26 @@ async function addToFavorites(item){
   }
 }
 
-function addToCart(item){
+function onClickAddToCart(item){
   if(!item.isAdded){
-    cartItems.value.push(item)
-    item.isAdded = true
-  } else{
-    cartItems.value.splice(cartItems.value.indexOf(item), 1)
-    item.isAdded = false
+    addToCart(item)
+  } else {
+    removeFromCart(item)
   }
   console.log('cart item: ', item)
   console.log('cart list: ', cartItems)
 }
 
+function addToCart(item){
+  cartItems.value.push(item)
+  item.isAdded = true
+}
+
+function removeFromCart(item){
+  cartItems.value.splice(cartItems.value.indexOf(item), 1)
+  item.isAdded = false
+  console.log('removed from cart')
+}
 
 
 </script>
@@ -158,7 +168,7 @@ function addToCart(item){
     </div>
     </div>
 
-      <CardList @addToCart="addToCart" :items="items" @addToFavorites="addToFavorites"/>
+      <CardList @onClickAddToCart="onClickAddToCart" :items="items" @addToFavorites="addToFavorites"/>
     
   </div>
 </template>

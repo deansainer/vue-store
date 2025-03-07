@@ -8,7 +8,7 @@
       isFavorite: Boolean,
       isAdded: Boolean,
       addToFavorites: Function,
-      addToCart: Function
+      onClickAddToCart: Function
     })
 
 </script>
@@ -26,7 +26,7 @@
             <b class="text-lg"> {{ price }}</b>
           </div>
 
-          <img class="absolute right-5 top-4" @click="addToCart" :src="isAdded ? '/checked.svg' : '/plus.svg'" alt="plus"/>
+          <img class="absolute right-5 top-4" @click="onClickAddToCart" :src="isAdded ? '/checked.svg' : '/plus.svg'" alt="plus"/>
         </div>
 
       </div>
