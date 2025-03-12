@@ -1,10 +1,12 @@
 <script setup>
 import { inject } from 'vue';
 import CartItemList from './CartItemList.vue';
+
 const {openDrawer, closeDrawer} = inject('cart')
 
 defineProps({
-    
+    cartTotal: Number,
+    createOrder: Function
 })
 </script>
 
@@ -23,15 +25,15 @@ defineProps({
             <div class="mt-auto mx-1">
                 <div class="flex justify-between">
                     <span>Total: </span>
-                    <span>$246.92</span>
+                    <span>${{cartTotal}}</span>
                 </div>
 
                 <div class="flex justify-between">
                     <span>Fee 5%: </span>
-                    <span>$11.92</span>
+                    <span>${{(cartTotal/20).toFixed(2)}}</span>
                 </div>
 
-                <button class="text-white mt-4 bg-sky-800 hover:bg-sky-900 active:bg-sky-950 disabled:bg-slate-300 transition py-3 cursor-pointer w-full rounded-xl">
+                <button :disabled="cartTotal <= 0" @click="createOrder" class="text-white mt-4 bg-sky-800 hover:bg-sky-900 active:bg-sky-950 disabled:bg-slate-300 disabled:cursor-default transition py-3 cursor-pointer w-full rounded-xl">
                     Order
                 </button>
 

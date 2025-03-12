@@ -23,7 +23,7 @@
         <div class="flex justify-between px-2 mt-4">
           <div class="flex flex-col absolute bottom-4">
             <span class="text-slate-400 text-base">Price</span>
-            <b class="text-lg"> {{ price }}</b>
+            <b class="text-lg"> ${{ price }}</b>
           </div>
 
           <img class="absolute right-5 top-4" @click="onClickAddToCart" :src="isAdded ? '/checked.svg' : '/plus.svg'" alt="plus"/>
