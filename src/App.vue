@@ -88,13 +88,28 @@ async function createOrder() {
 
 // rendering once page is opened
 onMounted(async () => {
+  const localCartItems = localStorage.getItem('cartItems')
+  cartItems.value = localCartItems ? JSON.parse(localCartItems) : []
+  
   await fetchItems()
   await fetchFavorites()
+
+
+  items.value = items.value.map((item) => ({
+    ...item,
+    isAdded: cartItems.value.some((cartItem) => cartItem.id === item.id)
+  }))
 })
 
 // listening to changes in filters & executing fetchItems func when changed
 watch(filters, fetchItems)
 
+// saving items into local storage
+watch(cartItems, () => {
+  localStorage.setItem('cartItems', JSON.stringify(cartItems.value))
+},
+  {deep: true}
+)
 
 function onChangeSelect(event) {
   filters.sortBy = event.target.value

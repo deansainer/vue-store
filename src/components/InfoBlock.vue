@@ -1,7 +1,11 @@
+<script setup>
+
+</script>
+
 <template>
-    <div>
-        <img height="70" width="70" alt="infoImage" src="/package-icon.png">
-        <h2 class="mt-4 text-2xl font-medium">Empty Basket</h2>
-        <p class="text-grey-400">Some description about how empty basket is</p>
+    <div class="flex text-center flex-col mt-70 items-center h-full w-full">
+        <img class="opacity-40" height="150" width="150" alt="infoImage" src="/package-icon.png">
+        <h2 class="text-slate-400 mt-4">Empty Cart</h2>
+        <p class="text-slate-400">Just add some items you liked</p>
     </div>
 </template>
