@@ -10,13 +10,15 @@ defineProps({
 
 <template>
     <header class="flex justify-between border-b p-4 border-gray-300">
-      <div class="flex items-center">
-        <img class="w-22" alt="logo" src="/carhartt-logo.svg">
-        <div class="ml-4">
-          <h1 class="text-xl font-bold uppercase">Carhartt</h1>
-          <p class="text-slate-500 text-base">Work In Progress</p>
+      <router-link to="/">
+        <div class="flex items-center">
+          <img class="w-22" alt="logo" src="/carhartt-logo.svg">
+          <div class="ml-4">
+            <h1 class="text-xl font-bold uppercase">Carhartt</h1>
+            <p class="text-slate-500 text-base">Work In Progress</p>
+          </div>
         </div>
-      </div>
+      </router-link>
 
 
     <ul class="flex items-center">
@@ -25,10 +27,12 @@ defineProps({
         <span class="text-sm ml-2">${{cartTotal}}</span>
       </li>
 
-      <li class="ml-4 flex items-center text-slate-500 cursor-pointer hover:text-black">
-        <img src="/heart.svg">
-        <span class="text-sm ml-2">Favorites</span>
-      </li>
+      <router-link to="/favorites">
+        <li class="ml-4 flex items-center text-slate-500 cursor-pointer hover:text-black">
+          <img src="/heart.svg">
+          <span class="text-sm ml-2">Favorites</span>
+        </li>
+      </router-link>
 
       <li class="ml-4 flex items-center text-slate-500 cursor-pointer hover:text-black">
         <img src="/profile.svg">
