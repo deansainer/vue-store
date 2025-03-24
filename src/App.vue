@@ -1,12 +1,7 @@
 <script setup>
-import CardList from './components/CardList.vue'
 import Header from './components/Header.vue'
-import axios from 'axios'
 import {ref, watch, computed, provide } from 'vue'
 import Drawer from './components/Drawer.vue'
-import Home from './pages/Home.vue'
-
-import InfoBlock from './components/InfoBlock.vue'
 
 // states
 const isDrawerOpen = ref(false)
@@ -35,21 +30,6 @@ watch(cartItems, () => {
 },
   {deep: true}
 )
-
-
-// creating order
-async function createOrder() {
-  try {
-    await axios.post('https://f5f2b5caba228578.mokky.dev/orders', {
-      cartTotal: cartTotal.value,
-      items: cartItems.value,
-    })
-    cartItems.value.forEach((item) => item.isAdded = false)
-    cartItems.value = [] // Clear the cart
-  } catch (error) {
-    console.log(error)
-  }
-}
 
 
 function addToCart(item) {

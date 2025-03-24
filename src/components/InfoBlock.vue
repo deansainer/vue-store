@@ -4,6 +4,12 @@ import { inject } from 'vue';
 
 const {openDrawer, closeDrawer} = inject('cart')
 
+const props = defineProps({
+    title: String,
+    description: String,
+    imageURL: String
+})
+
 </script>
 
 <template>
@@ -14,9 +20,9 @@ const {openDrawer, closeDrawer} = inject('cart')
         </div>
 
     <div class="flex text-center flex-col mt-70 items-center h-full w-full">
-        <img class="opacity-40" height="150" width="150" alt="infoImage" src="/package-icon.png">
-        <h2 class="text-slate-400 mt-4">Empty Cart</h2>
-        <p class="text-slate-400">Just add some items you liked</p>
+        <img class="opacity-40" height="150" width="150" alt="infoImage" :src="props.imageURL">
+        <h2 class="text-slate-400 mt-4">{{ props.title }}</h2>
+        <p class="text-slate-400">{{ props.description }}</p>
     </div>
     
 </div>
